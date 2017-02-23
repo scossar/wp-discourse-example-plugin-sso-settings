@@ -115,7 +115,7 @@ class Options {
 	public function second_level_tabbed_menu( $tab, $parent_tab ) {
 		if ( 'wpdc_sso_options' === $tab || 'wpdc_sso_options' === $parent_tab ) {
 			?>
-            <h3 class="nav-tab-wrapper nav-tab-second-level">
+            <h2 class="nav-tab-wrapper nav-tab-second-level">
                 <a href="?page=wp_discourse_options&tab=sso_common&parent_tab=wpdc_sso_options"
                    class="nav-tab <?php echo 'sso_common' === $tab || 'wpdc_sso_options' === $tab ? 'nav-tab-active' : ''; ?>">
 					<?php esc_html_e( 'Common Options', 'wpdc' ); ?>
@@ -128,7 +128,7 @@ class Options {
                    class="nav-tab <?php echo 'sso_client' === $tab ? 'nav-tab-active' : ''; ?>">
 					<?php esc_html_e( 'SSO Client', 'wpdc' ); ?>
                 </a>
-            </h3>
+            </h2>
 			<?php
 		}
 	}
