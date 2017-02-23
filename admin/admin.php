@@ -29,7 +29,7 @@ class Options {
 	public function plugin_settings() {
 		$this->options = DiscourseUtilities::get_options();
 
-		add_settings_section( 'wpdc_common_sso_settings_section', __( 'Common Settinggs', 'wpdc' ), array(
+		add_settings_section( 'wpdc_common_sso_settings_section', __( 'Common Settings', 'wpdc' ), array(
 			$this,
 			'common_settings_details',
 		), 'wpdc_sso_common' );
@@ -40,6 +40,23 @@ class Options {
 		), 'wpdc_sso_common', 'wpdc_common_sso_settings_section' );
 
 		register_setting( 'wpdc_sso_common', 'wpdc_sso_common', array( $this, 'validate_options' ) );
+
+		add_settings_section( 'wpdc_sso_provider_section', __( 'SSO Provider Settings', 'wpdc' ), array(
+			$this,
+			'sso_provider_settings_details',
+		), 'wpdc_sso_provider' );
+
+		add_settings_field( 'wpdc_sso_provider_enabled', __( 'Enable SSO Provider', 'wpdc' ), array(
+			$this,
+			'provider_enabled_checkbox',
+		), 'wpdc_sso_provider', 'wpdc_sso_provider_section' );
+
+		add_settings_field( 'wpdc_sso_login_path', __( 'Login Path', 'wpdc' ), array(
+			$this,
+			'login_path_text_input',
+		), 'wpdc_sso_provider', 'wpdc_sso_provider_section' );
+
+		register_setting( 'wpdc_sso_provider', 'wpdc_sso_provider', array( $this, 'validate_options' ) );
 	}
 
 	public function add_sso_submenu_page() {
@@ -89,8 +106,18 @@ class Options {
 		}
 	}
 
+	// SSO Common
 	public function sso_secret_input() {
 		$this->input_helper->text_input( 'wpdc-sso-secret', 'wpdc_sso_common', __( 'SSO Secret', 'wpdc' ) );
+	}
+
+	public function provider_enabled_checkbox() {
+		$this->input_helper->checkbox_input( 'wpdc-enable-sso-provider', 'wpdc_sso_provider', __( 'Enable WordPress to function as the SSO provider for Discourse', 'wpdc' ) );
+	}
+
+	// SSO Provider
+	public function login_path_text_input() {
+		$this->input_helper->text_input( 'wpdc-login-path', 'wpdc_sso_provider', __( 'The path to your WordPress login page.', 'wpdc' ) );
 	}
 
 	public function sso_settings_fields( $tab ) {
@@ -99,11 +126,21 @@ class Options {
 			do_settings_sections( 'wpdc_sso_common' );
 		}
 
+		if ( 'sso_provider' === $tab ) {
+			settings_fields( 'wpdc_sso_provider' );
+			do_settings_sections( 'wpdc_sso_provider' );
+		}
 	}
 
 	public function common_settings_details() {
 		?>
         <p>The SSO secret key is shared between your WordPress site and your Discourse forum.</p>
+		<?php
+	}
+
+	public function sso_provider_settings_details() {
+		?>
+        <p>Use your WordPress site as the SSO provider for your forum.</p>
 		<?php
 	}
 
