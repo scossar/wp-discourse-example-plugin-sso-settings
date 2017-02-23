@@ -45,7 +45,6 @@ class SingleSignOn {
 				$merged_options = array_merge( $merged_options, $option );
 			}
 
-			write_log( 'merged', $merged_options );
 			$merged_options = array_merge( $wpdc_options, $merged_options );
 		}
 
