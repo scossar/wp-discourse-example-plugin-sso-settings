@@ -10,6 +10,8 @@ namespace WPDC\PluginExamples\SSO;
 use \WPDiscourse\Admin\OptionsPage as OptionsPage;
 use \WPDiscourse\Admin\OptionInput as InputHelper;
 
+define( 'WPDC_SSO_URL', plugins_url( '/wp-discourse-single-sign-on' ) );
+
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\init' );
 function init() {
@@ -25,6 +27,14 @@ function init() {
 			$input_helper = InputHelper::get_instance();
 
 			new Admin\Options( $options_page, $input_helper );
+
+			add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts' );
 		}
 	}
+}
+
+function admin_scripts() {
+	wp_register_style( 'wpdc_sso_admin',WPDC_SSO_URL . '/admin/css/wpdc-admin-styles.css' );
+	write_log('WPDISCOURSE_URL', WPDC_SSO_URL );
+	wp_enqueue_style( 'wpdc_sso_admin' );
 }
