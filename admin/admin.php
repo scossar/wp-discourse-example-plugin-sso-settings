@@ -24,6 +24,7 @@ class Options {
 			'second_level_tabbed_menu'
 		), 10, 2 );
 		add_action( 'discourse/admin/options-page/after-tab-switch', array( $this, 'sso_settings_fields' ) );
+
 	}
 
 	public function plugin_settings() {
@@ -114,7 +115,7 @@ class Options {
 	public function second_level_tabbed_menu( $tab, $parent_tab ) {
 		if ( 'wpdc_sso_options' === $tab || 'wpdc_sso_options' === $parent_tab ) {
 			?>
-            <h3 class="nav-tab-wrapper">
+            <h3 class="nav-tab-wrapper nav-tab-second-level">
                 <a href="?page=wp_discourse_options&tab=sso_common&parent_tab=wpdc_sso_options"
                    class="nav-tab <?php echo 'sso_common' === $tab || 'wpdc_sso_options' === $tab ? 'nav-tab-active' : ''; ?>">
 					<?php esc_html_e( 'Common Options', 'wpdc' ); ?>
